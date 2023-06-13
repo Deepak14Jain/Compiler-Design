@@ -1,0 +1,27 @@
+%{
+#include<stdio.h>
+int k=0,id=0,eq=0,sc=0,num=0;
+%}
+
+%%
+int|float|double|char {printf("%s is a keyword\n",yytext);k++;}
+[a-zA-z][a-zA-Z0-9]* {printf("%s is an identifier\n",yytext);id++;}
+"=" {printf("%s is an assigner\n",yytext);eq++;}
+[0-9]+ {printf("%s is a digit\n",yytext);num++;}
+";" {printf("%s is a semicolon\n",yytext);sc++;}
+"\n" {return 0;}
+%%
+
+int main(){
+    printf("Enter a declaration statement: ");
+    yylex();
+    if((k==1) && (id==1) && (eq==1) && (sc==1) && (num==1)){
+        printf("Valid Statement\n");
+    }else{
+        printf("Invalid Statement\n");
+    }
+}
+
+int yywrap(){
+    return 1;
+}
